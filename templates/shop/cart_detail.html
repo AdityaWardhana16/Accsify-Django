@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Accsify</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-4">Cart</h1>
+
+        <div class="row">
+            <!-- Daftar produk di keranjang -->
+            <div class="col-md-8">
+                <table class="table table-borderless align-middle">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.items.all %}
+                        <tr>
+                            <td>
+                                <p><strong>{{ item.product.name }}</strong></p>
+                                <p class="text-secondary">Rp {{ item.product.price }}</p>
+                            </td>
+                            <td>
+                                <form method="post" action="{% url 'cart:update_item' item.product.id %}">
+                                    {% csrf_token %}
+                                    <div class="input-group" style="max-width: 120px;">
+                                        <!-- Tombol untuk mengurangi kuantitas -->
+                                        <button class="btn btn-outline-secondary btn-sm" type="submit" name="quantity" value="{{ item.quantity|add:-1 }}">-</button>
+                                        <!-- Input untuk kuantitas -->
+                                        <input type="text" name="quantity" class="form-control text-center" value="{{ item.quantity }}">
+                                        <!-- Tombol untuk menambah kuantitas -->
+                                        <button class="btn btn-outline-secondary btn-sm" type="submit" name="quantity" value="{{ item.quantity|add:1 }}">+</button>
+                                    </div>
+                                </form>
+                            </td>
+                            <td>Rp {{ item.total_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Rincian total belanja -->
+            <div class="col-md-4">
+                <div class="border p-3">
+                    <h5>Cart Totals</h5>
+                    <ul class="list-unstyled">
+                        <li class="d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <span>Rp {{ total_price }}</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <span>Kode Unik</span>
+                            <span>Rp 817</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <span>Delivery</span>
+                            <span><a href="#">Enter address to check delivery options</a></span>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>Rp {{ total_price }}</span>
+                    </div>
+                    <button class="btn btn-dark w-100 mt-3">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-light text-center">
+        <p>&copy; 2024 Accsify</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

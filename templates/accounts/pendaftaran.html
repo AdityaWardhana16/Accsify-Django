@@ -1,0 +1,193 @@
+{% block content %}
+<div class="full-screen-container">
+    <div class="register-card">
+        <div class="brand-text">
+            <h1>MyApp</h1>
+        </div>
+        <h1 class="header-title">Daftar Akun</h1>
+        <p class="instruction-text">Isi informasi di bawah untuk membuat akun baru.</p>
+
+        {% if msg %}
+            <span class="text-error">{{ msg|safe }}</span>
+        {% endif %}
+
+        <ul class="messages">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li class="message error">{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+
+        <form method="post" class="register-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="first_name">Nama Depan</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="last_name">Nama Belakang</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Nomor WhatsApp</label>
+                {{ form.phone_number }}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                <label for="password2">Konfirmasi Password</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="submit-btn-modal">Daftar</button>
+        </form>
+
+        <div class="additional-links">
+            <p class="text-reset-password-sm">
+                Sudah punya akun? <a href="{% url 'login' %}" class="reset-password-link">Login disini</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6b46c1, #9f7aea);
+    color: #4a5568;
+}
+.full-screen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px; /* Memberikan ruang untuk kontainer */
+    box-sizing: border-box; /* Pastikan padding dihitung dalam lebar total */
+}
+
+.register-card {
+    width: 100%;
+    max-width: 400px; /* Batasi lebar maksimal form */
+    padding: 20px; /* Ruang di dalam kartu */
+    box-sizing: border-box; /* Pastikan padding dihitung */
+    margin: 0 auto; /* Pusatkan kontainer */
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.brand-text h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #6b46c1;
+    margin-bottom: 20px;
+}
+.header-title {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+.instruction-text {
+    font-size: 0.95em;
+    color: #718096;
+    margin-bottom: 20px;
+}
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+.messages .message.error {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffe4e6;
+    color: #9b2c2c;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #4a5568;
+}
+input {
+    width: 100%; /* Gunakan seluruh lebar kartu */
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #f7fafc;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Termasuk padding di dalam width */
+}
+input:focus {
+    border-color: #6b46c1;
+    outline: none;
+}
+.submit-btn-modal {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #6b46c1;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.submit-btn-modal:hover {
+    background-color: #5a3fa1;
+}
+.additional-links {
+    margin-top: 20px;
+    font-size: 0.85em;
+    color: #4a5568;
+}
+.reset-password-link {
+    color: #6b46c1;
+    text-decoration: none;
+    font-weight: 500;
+}
+.reset-password-link:hover {
+    text-decoration: underline;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media screen and (max-width: 768px) {
+    .register-card {
+        padding: 15px; /* Kurangi padding untuk layar kecil */
+    }
+    input {
+        font-size: 0.95em; /* Sesuaikan ukuran input */
+    }
+}
+
+</style>
+{% endblock %}

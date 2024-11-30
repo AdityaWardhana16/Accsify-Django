@@ -1,0 +1,137 @@
+{% block content %}
+<div class="service-container-password full-screen-container">
+   <div class="login-card">
+      <h1 class="header-title">Selamat Datang!</h1>
+      <p class="instruction-text">Silakan masuk dengan email dan password Anda.</p>
+
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+
+      <form method="post" class="login-form">
+          {% csrf_token %}
+          <div class="form-group">
+              {{ form.as_p }}
+          </div>
+          <button type="submit" class="submit-btn-modal">Masuk</button>
+      </form>
+
+      <div class="additional-links">
+          <p class="text-reset-password-sm">Lupa password?
+              <a href="{% url 'password_reset' %}" class="reset-password-link">Atur Ulang</a>
+          </p>
+          <p class="text-register">Belum punya akun?
+              <a href="{% url 'register' %}" class="register-link">Daftar Sekarang</a>
+          </p>
+      </div>
+   </div>
+</div>
+
+<style>
+body {
+   margin: 0;
+   padding: 0;
+   font-family: 'Poppins', sans-serif;
+   background: linear-gradient(135deg, #667eea, #764ba2);
+   color: #4a5568;
+}
+.full-screen-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+.login-card {
+   width: 100%;
+   max-width: 400px;
+   background-color: #ffffff;
+   border-radius: 12px;
+   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+   padding: 40px 30px;
+   text-align: center;
+   animation: fadeIn 0.5s ease-in-out;
+}
+.header-title {
+   font-size: 1.8em;
+   font-weight: 600;
+   color: #2d3748;
+   margin-bottom: 10px;
+}
+.instruction-text {
+   font-size: 0.95em;
+   color: #718096;
+   margin-bottom: 20px;
+}
+.messages {
+   list-style: none;
+   padding: 0;
+   margin-bottom: 20px;
+}
+.messages .message {
+   padding: 10px;
+   border-radius: 5px;
+   background-color: #ffe4e6;
+   color: #9b2c2c;
+   font-size: 0.9em;
+   margin-bottom: 10px;
+}
+.form-group {
+   margin-bottom: 20px;
+}
+input {
+   width: 100%;
+   padding: 12px;
+   margin: 10px 0;
+   border: 1px solid #e2e8f0;
+   border-radius: 8px;
+   font-size: 1em;
+   background-color: #f7fafc;
+   transition: border-color 0.3s;
+}
+input:focus {
+   border-color: #3182ce;
+   outline: none;
+}
+.submit-btn-modal {
+   width: 100%;
+   padding: 12px;
+   background-color: #3182ce;
+   color: #ffffff;
+   border: none;
+   border-radius: 8px;
+   font-size: 1em;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+.submit-btn-modal:hover {
+   background-color: #2b6cb0;
+}
+.additional-links {
+   margin-top: 20px;
+   font-size: 0.85em;
+   color: #4a5568;
+}
+.reset-password-link, .register-link {
+   color: #3182ce;
+   text-decoration: none;
+   font-weight: 500;
+}
+.reset-password-link:hover, .register-link:hover {
+   text-decoration: underline;
+}
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+</style>
+{% endblock %}
